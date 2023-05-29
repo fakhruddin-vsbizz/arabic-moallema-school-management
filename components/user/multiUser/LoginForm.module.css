@@ -1,0 +1,58 @@
+.form {
+  padding: 1rem;
+  margin-top: 12rem;
+}
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.control input,
+.control textarea {
+  display: block;
+  font: inherit;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 0.25rem;
+  width: 100%;
+}
+.actions {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.actions button {
+  font: inherit;
+  cursor: pointer;
+  background-color: #004f70;
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid #21409a;
+  border-radius: 4px;
+  font-weight: bold;
+  width: 50%;
+  transition: all 0.1s ease-out;
+}
+
+.actions button:hover,
+.actions button:active {
+  background-color: #163799;
+  border-color: #163799;
+  transform: translateY(-10%);
+  box-shadow: 2px 2px 20px 0.1rem rgba(0, 0, 0, 0.15);
+}
+
+.invalid input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
