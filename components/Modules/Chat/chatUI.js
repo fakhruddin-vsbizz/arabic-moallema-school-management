@@ -167,54 +167,56 @@ export default function ChatUI({ user }) {
   }, [socket, chosenUsername]);
 
   const sendMessage = async () => {
-    if (user === "teacher") {
-      const data = await addChatData(
-        teacherId,
-        batchId,
-        message,
-        email,
-        userName
-      );
+    if (message !== "" && message.trim().length !== 0) {
+      if (user === "teacher") {
+        const data = await addChatData(
+          teacherId,
+          batchId,
+          message,
+          email,
+          userName
+        );
 
-      console.log(data[0]);
+        console.log(data[0]);
 
-      if (message.trim() !== "" && chosenUsername) {
-        // const newMessage = {
-        //   user_id: teacherId,
-        //   user_name: userName,
-        //   user_email: email,
-        //   batch_id: batchId,
-        //   message: message,
-        //   created_at: new Date(),
-        // };
+        if (message.trim() !== "" && chosenUsername) {
+          // const newMessage = {
+          //   user_id: teacherId,
+          //   user_name: userName,
+          //   user_email: email,
+          //   batch_id: batchId,
+          //   message: message,
+          //   created_at: new Date(),
+          // };
 
-        // Emit the "createdMessage" event to the server
-        socket.emit("createdMessage", data[0]);
+          // Emit the "createdMessage" event to the server
+          socket.emit("createdMessage", data[0]);
 
-        setMessage("");
+          setMessage("");
+        }
       }
-    }
-    if (user === "student") {
-      const data = await addChatData(
-        studentId,
-        batchId,
-        message,
-        email,
-        userName
-      );
-      console.log(data);
-      if (message.trim() !== "" && chosenUsername) {
-        // const newMessage = {
-        //   user_id: studentId,
-        //   user_name: userName,
-        //   user_email: email,
-        //   batch_id: batchId,
-        //   message: message,
-        //   created_at: new Date(),
-        // };
-        // Emit the "createdMessage" event to the server
-        socket.emit("createdMessage", data[0]);
-        setMessage("");
+      if (user === "student") {
+        const data = await addChatData(
+          studentId,
+          batchId,
+          message,
+          email,
+          userName
+        );
+        console.log(data);
+        if (message.trim() !== "" && chosenUsername) {
+          // const newMessage = {
+          //   user_id: studentId,
+          //   user_name: userName,
+          //   user_email: email,
+          //   batch_id: batchId,
+          //   message: message,
+          //   created_at: new Date(),
+          // };
+          // Emit the "createdMessage" event to the server
+          socket.emit("createdMessage", data[0]);
+          setMessage("");
+        }
       }
     }
   };
