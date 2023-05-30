@@ -44,6 +44,8 @@ const style = {
 
 const BatchDetailHome = ({ batchName }) => {
   const [open, setOpen] = React.useState(false);
+  const [update, setUpdate] = React.useState(false);
+
   const [enrollStudents, setEnrollStudents] = React.useState([]);
   const [batchHistory, setBatchHistory] = React.useState([]);
   const [batchDetail, setBatchDetail] = React.useState([]);
@@ -53,8 +55,15 @@ const BatchDetailHome = ({ batchName }) => {
   const [allStudentsInBatchData, setAllStudentsInBatchData] = React.useState(
     []
   );
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => {
+    setUpdate((prev) => !prev);
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setUpdate((prev) => !prev);
+
+    setOpen(false);
+  };
   const batchCtx = useContext(BatchContext);
 
   //getting the bacthId
@@ -68,7 +77,7 @@ const BatchDetailHome = ({ batchName }) => {
       }
     };
     fetchTeacherId();
-  }, [batchName]);
+  }, [batchName, update]);
 
   console.log(batchId);
   console.log(teacherEmail);
@@ -83,7 +92,7 @@ const BatchDetailHome = ({ batchName }) => {
       }
     };
     fetchTeacherEmail();
-  }, [teacherId, open]);
+  }, [teacherId, open, update]);
 
   //getting the bacth details
   React.useEffect(() => {
@@ -92,7 +101,7 @@ const BatchDetailHome = ({ batchName }) => {
       setBatchDetail(data);
     };
     fetchBatches();
-  }, [open]);
+  }, [open, update]);
 
   //filtering the bathches data
   const detail = batchDetail.filter((batch) => batch.batch_id === +batchId);
