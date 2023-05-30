@@ -17,23 +17,23 @@
 }
 
 :root {
-  --primary: rgba(128, 128, 128, 0.226);
-  --secondary: #284b8d;
+  --primary: rgba(0, 0, 0, 0.01);
+  --secondary: #004f70;
 }
 
 *::-webkit-scrollbar {
-  width: 15px;
+  width: 10px;
 }
 
 *::-webkit-scrollbar-track {
   background: var(--primary);
-  border-radius: 5px;
+  border-radius: 50px;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: var(--secondary);
   border-radius: 14px;
-  border: 3px solid var(--primary);
+  border: 2px solid var(--primary);
 }
 
 body {

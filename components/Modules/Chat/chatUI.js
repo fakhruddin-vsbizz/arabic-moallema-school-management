@@ -12,19 +12,22 @@ import {
   fetchStudentNameBasedOnEmail,
   fetchStudentsData,
 } from "@/backend/Students/StudentDB";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   fetchTeacherNameBasedOnEmail,
   fetchTeachersData,
   fetchTeachersIdBasedOnEmail,
 } from "@/backend/Teachers/TeacherDB";
 import AuthContext from "@/components/Context/store/auth-context";
-import { Avatar, Button } from "@mui/material";
+import { Avatar, Button, Chip } from "@mui/material";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import SendIcon from "@mui/icons-material/Send";
 import grayBgImg from "@/components/src/img/grayBgImgM.png";
-
+import Link from "next/link";
+import FaceIcon from "@mui/icons-material/Face";
 const Message = {
   author: "",
   message: "",
@@ -262,6 +265,14 @@ export default function ChatUI({ user }) {
               <div className="bg-dark-purple w-screen ">
                 <div className=" flex">
                   <div className="w-1/5 flex">
+                    <Link href={`/${user}`}>
+                      <IconButton aria-label="delete" size="large">
+                        <ArrowBackIcon
+                          style={{ color: "white" }}
+                          fontSize="inherit"
+                        />
+                      </IconButton>
+                    </Link>
                     <Avatar src="/broken-image.jpg" className="m-2" />
                     <p className="font-bold text-white text-xl my-3">
                       {userName}
@@ -318,14 +329,30 @@ export default function ChatUI({ user }) {
                               }`}
                             >
                               {msg.user_name}
+                              {/* <Chip
+                                className={` ${
+                                  isOwnMessage
+                                    ? "text-amber-300"
+                                    : "text-dark-purple"
+                                } `}
+                                sx={{
+                                  height: "18px",
+                                  fontSize: "12px",
+                                  marginLeft: 1,
+                                }}
+                                icon={<FaceIcon sx={{ fontSize: "14px" }} />}
+                                label={user}
+                              /> */}
                             </label>
                             {msg.message}
                             <span className="text-[9px] pl-5 ">
+                            {console.log("Date")}
                               {new Date(msg.created_at).toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
                                 // second: "2-digit",
                               })}
+                              
                             </span>
                           </span>
                         </div>
