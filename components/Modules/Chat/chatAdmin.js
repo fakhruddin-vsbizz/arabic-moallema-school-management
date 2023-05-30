@@ -6,13 +6,15 @@ import {
   addChatData,
   fetchChatHistoryBasedOnBatch,
 } from "@/backend/ChatData/ChatDataForBatch";
-
+import IconButton from '@mui/material/IconButton';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AuthContext from "@/components/Context/store/auth-context";
 import { Avatar, Button } from "@mui/material";
 import { useContext } from "react";
 import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
 import SendIcon from "@mui/icons-material/Send";
+import Link from "next/link";
 const Message = {
   author: "",
   message: "",
@@ -123,6 +125,11 @@ export default function ChatAdmin({ user }) {
               <div className="bg-dark-purple w-screen ">
                 <div className=" flex">
                   <div className="w-1/5 flex">
+                    <Link href="/admin">
+                    <IconButton aria-label="delete" size="large" >
+                      <ArrowBackIcon style={{color: 'white'}} fontSize="inherit" />
+                    </IconButton>
+                    </Link>
                     <Avatar src="/broken-image.jpg" className="m-2" />
                     <p className="font-bold text-white text-xl my-3">Admin</p>
                   </div>

@@ -245,11 +245,7 @@ function nav_reference(batchName) {
         link: `/teacher/class`,
         img: <LiveTvIcon className="text-dark-purple" />,
       },
-      {
-        linkname: "Announcements",
-        link: "/work-in-progress",
-        img: <CampaignIcon className="text-dark-purple" />,
-      },
+     
       {
         linkname: "Chat",
         link: `/teacher/chat`,
