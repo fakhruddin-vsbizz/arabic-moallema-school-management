@@ -80,11 +80,13 @@ export default function ChatAdmin({ user }) {
   }, [socket, chosenUsername]);
 
   const sendMessage = async () => {
-    const data = await addChatData(1, batchId, message, email, "admin");
-    console.log(data);
-    if (message.trim() !== "" && chosenUsername) {
-      socket.emit("createdMessage", data[0]);
-      setMessage("");
+    if (message !== "" && message.trim().length !== 0) {
+      const data = await addChatData(1, batchId, message, email, "admin");
+      console.log(data);
+      if (message.trim() !== "" && chosenUsername) {
+        socket.emit("createdMessage", data[0]);
+        setMessage("");
+      }
     }
   };
 
@@ -126,21 +128,21 @@ export default function ChatAdmin({ user }) {
                   </div>
                   <div className="w-2/5 flex"></div>
                   <div className="w-2/5 px-5">
-                  <div className="flex">
-                        <p className="w-40 mt-4 text-white">Selected Batch:</p>
-                    <select
-                      value={selectedBatch}
-                      onChange={(e) => setSelectedBatch(e.target.value)}
-                      className="rounded-md w-full outline-none px-2 py-2 my-2 "
-                    >
-                      <option value="">Select Batch</option>
-                      {allBatches &&
-                        allBatches.map((user) => (
-                          <option key={user} value={user.batch_name}>
-                            {user.batch_name}
-                          </option>
-                        ))}
-                    </select>
+                    <div className="flex">
+                      <p className="w-40 mt-4 text-white">Selected Batch:</p>
+                      <select
+                        value={selectedBatch}
+                        onChange={(e) => setSelectedBatch(e.target.value)}
+                        className="rounded-md w-full outline-none px-2 py-2 my-2 "
+                      >
+                        <option value="">Select Batch</option>
+                        {allBatches &&
+                          allBatches.map((user) => (
+                            <option key={user} value={user.batch_name}>
+                              {user.batch_name}
+                            </option>
+                          ))}
+                      </select>
                     </div>
                   </div>
                 </div>
