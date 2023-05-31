@@ -7,6 +7,13 @@ export const updateTeacher = async (batchId, teacherId) => {
     .match({ batch_id: batchId });
 };
 
+export const updateBatchLink = async (batchId, gmeet) => {
+  const { data4, error4 } = await supabase
+    .from("batches")
+    .update({ g_meet: gmeet })
+    .match({ batch_id: batchId });
+};
+
 export const updateBatch = async (
   enteredBatchName,
   enteredType,

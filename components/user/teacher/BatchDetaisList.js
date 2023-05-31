@@ -35,6 +35,7 @@ import { fetchStudentsData } from "@/backend/Students/StudentDB";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import Spinner from "@/components/Layout/spinner/Spinner";
 import { useEffect } from "react";
+import { updateBatchLink } from "@/backend/Batches/UpdateBatchTeacher";
 const style = {
   position: "absolute",
   top: "50%",
@@ -58,6 +59,7 @@ const ClassDetais = ({ batchName, user }) => {
 
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [batchId, setBatchId] = React.useState();
+  const [finalLinkGmeet, setFinalLinkGmeet] = React.useState();
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -88,7 +90,7 @@ const ClassDetais = ({ batchName, user }) => {
   React.useEffect(() => {
     const setBatchIdData = async () => {
       const idData = await fetchBatcheIdBasedOnBatchName(batchName);
-      if (idData[0]) {
+      if (idData && idData[0]) {
         setBatchId(idData[0].batch_id);
         console.log(idData[0].batch_id);
       }
@@ -199,6 +201,22 @@ const ClassDetais = ({ batchName, user }) => {
     }
   };
 
+  const updateBatchGmeet = async () => {
+    console.log("data", finalLinkGmeet);
+
+    if (finalLinkGmeet === "") {
+      console.log("empty", finalLinkGmeet);
+      return;
+    }
+
+    if (finalLinkGmeet !== "") {
+      await updateBatchLink(batchId, finalLinkGmeet);
+      window.location.reload();
+    }
+  };
+
+  console.log(finalLinkGmeet);
+
   return (
     <>
       {detail[0] && sheduleData && (
@@ -258,9 +276,27 @@ const ClassDetais = ({ batchName, user }) => {
                 <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
                   <div className=" m-10 w-full  col-span-3">
                     <label>G Meet</label>
-                    <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-black  rounded-lg shadow-md ">
-                      {detail[0].g_meet}
-                    </span>
+                    {user === "student" && (
+                      <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-black  rounded-lg shadow-md ">
+                        {detail[0].g_meet}
+                      </span>
+                    )}
+                    {user !== "student" && (
+                      <div>
+                        <input
+                          type="text"
+                          className=" m-4 rounded-lg w-96"
+                          defaultValue={detail[0].g_meet}
+                          onChange={(e) => setFinalLinkGmeet(e.target.value)}
+                        />
+                        <button
+                          onClick={updateBatchGmeet}
+                          className=" bg-slate-400 text-black p-2 rounded-lg shadow-lg"
+                        >
+                          Edit Link
+                        </button>
+                      </div>
+                    )}
                   </div>
                   <div className="  my-5 col-span-2">
                     <div className="flex items-center justify-end ">
