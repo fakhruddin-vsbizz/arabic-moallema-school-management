@@ -42,6 +42,7 @@ const style = {
   p: 4,
 };
 
+//just to push
 const BatchDetailHome = ({ batchName }) => {
   const [open, setOpen] = React.useState(false);
   const [update, setUpdate] = React.useState(false);
