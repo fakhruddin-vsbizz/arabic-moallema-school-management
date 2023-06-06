@@ -42,13 +42,13 @@ const CardLayout = ({
   return (
     <div>
       {fullIs && (
-        <div className="w-full grid grid-cols-4 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
+        <div className="w-full grid grid-cols-4 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-orange-400 ">
           <div className="flex m-10  col-span-4">{fullComp}</div>
         </div>
       )}
 
       {!fullIs && (
-        <div className="w-full grid grid-cols-4 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
+        <div className="w-full grid grid-cols-4 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-orange-400 ">
           <div className="flex m-10 items-center justify-start col-span-2">
             {firstComp}
             <div className="font-bold text-xl ">{title}</div>

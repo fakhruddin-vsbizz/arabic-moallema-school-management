@@ -3,7 +3,7 @@ import Link from "next/link";
 import CardLayout from "@/components/Layout/card/CardLayout";
 import MUISlider from "@/components/Layout/slider/MUISlider";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
-import { Chip, LinearProgress } from "@mui/material";
+import { Chip, Grow, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import AuthContext from "@/components/Context/store/auth-context";
 // import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
@@ -60,10 +60,10 @@ const ClassDetais = ({ batchName, user }) => {
   return (
     <div className="">
       <div className="px-3 lg:px-8 w-full">
-        <div className=" w-full">
+        <div className=" w-full animate-popupSlide ">
           <CardLayout
             firstComp=<div>
-              <h1 className="text-2xl lg:text-3xl text-dark-purple">
+              <h1 className="text-2xl lg:text-3xl text-white animate-popupSlide">
                 {batchName}
               </h1>
             </div>
@@ -82,13 +82,23 @@ const ClassDetais = ({ batchName, user }) => {
               sessionData &&
               sessionData.map((chapter) => (
                 <div className="px-2">
-                  <MUIMiniCard
-                    title={`session ${chapter.session_id}`}
-                    disc={chapter.starting_time.substring(0, 10)}
-                    isBtn={true}
-                    btnText="View"
-                    link={`/teacher/chapter-detail/${chapter.session_id}/${chapter.batch_id}`}
-                  />
+                    <Box
+                      component="polygon"
+                      // sx={{
+                      //   fill: (theme) => theme.palette.common.white,
+                      //   stroke: (theme) => theme.palette.divider,
+                      //   strokeWidth: 1,
+                      // }}
+                      points="0,100 50,00, 100,100"
+                    >
+                      <MUIMiniCard
+                        title={`session ${chapter.session_id}`}
+                        disc={chapter.starting_time.substring(0, 10)}
+                        isBtn={true}
+                        btnText="View"
+                        link={`/teacher/chapter-detail/${chapter.session_id}/${chapter.batch_id}`}
+                      />
+                    </Box>
                 </div>
               ))
             }

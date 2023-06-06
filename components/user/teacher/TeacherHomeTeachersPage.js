@@ -7,14 +7,35 @@ import { fetchTeacherBatches } from "@/backend/Batches/BatchesForTeachersStudent
 import CardList from "../admin/CardList";
 import { fetchTeachersIdBasedOnEmail } from "@/backend/Teachers/TeacherDB";
 import WarningCard from "@/components/Layout/card/WarningCard";
+import BackButton from "@/components/Layout/elements/BackButton";
+import { Button, Divider } from "@mui/material";
+import { useRouter } from "next/router";
+
+import BatchContext from "@/components/Context/store/batch-context";
+
 // import InProgress from "@/components/Layout/screen/InProgress";
 // import MiniCard from "@/components/Layout/card/MiniCard";
 
 const TeacherHomeTeachersPage = ({ email }) => {
   const [teacherId, setTeacherId] = useState();
   const [warning, setWarning] = React.useState(false);
+  const batchCtx = useContext(BatchContext);
 
+  let batchName = batchCtx.batchName;
+  // console.log(batchName);
+  // let nav_data = nav_reference(batchName)[props.nav_index];
+
+  // console.log(props.batchName);
   const authCtx = useContext(AuthContext);
+  const router = useRouter();
+
+  const logoutHandler = (e) => {
+    console.log("LoggOut");
+    authCtx.logout();
+    router.replace("/");
+  };
+
+  // const authCtx = useContext(AuthContext);
 
   useEffect(() => {
     const getTeacherId = async () => {
@@ -60,9 +81,34 @@ const TeacherHomeTeachersPage = ({ email }) => {
     >
       <div className="flex min-h-screen h-full">
         <div className="flex-1 h-screen p-7  ">
-          {warning && <WarningCard title="No Batches assign to the teacher" />}
-
-          <div className="m-0 p-10 w-full h-fit">
+          <div className="m-0 p-2 w-full h-fit">
+            <div className="grid grid-cols-4 w-full mx-auto my-2 gap-10">
+              <div className="col-span-3">
+                <h1 className=" my-auto text-2xl mt-3 ml-5 ">
+                  Select one of the allotted batch to get started with Dashboard
+                </h1>
+              </div>
+              <div className="col-span-1">
+                <center>
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "rgba(0 255 255 0.5))",
+                      // opacity: "0.5",
+                      color: "darkblue",
+                      fontWeight: 700,
+                    }}
+                    onClick={logoutHandler}
+                  >
+                    Logout
+                  </Button>
+                </center>
+              </div>
+            </div>
+            <Divider variant="middle" />
+            {warning && (
+              <WarningCard title="No Batches assign to the teacher" />
+            )}
             <div className="grid grid-cols-2 lg:grid-cols-3 w-full mx-auto my-10 gap-10">
               {authCtx.batchesList &&
                 authCtx.batchesList.map((batch) => (
