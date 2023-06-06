@@ -35,6 +35,7 @@ import { fetchStudentsData } from "@/backend/Students/StudentDB";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
+import { updateBatchLink } from "@/backend/Batches/UpdateBatchTeacher";
 const style = {
   position: "absolute",
   top: "50%",
@@ -58,6 +59,7 @@ const ClassDetais = ({ batchName, user }) => {
 
   const [isDisabled, setIsDisabled] = React.useState(false);
   const [batchId, setBatchId] = React.useState();
+  const [finalLinkGmeet, setFinalLinkGmeet] = React.useState();
 
   const batchCtx = React.useContext(BatchContext);
   const attendanceList = batchCtx.attendanceList;
@@ -88,7 +90,7 @@ const ClassDetais = ({ batchName, user }) => {
   React.useEffect(() => {
     const setBatchIdData = async () => {
       const idData = await fetchBatcheIdBasedOnBatchName(batchName);
-      if (idData[0]) {
+      if (idData && idData[0]) {
         setBatchId(idData[0].batch_id);
         console.log(idData[0].batch_id);
       }
@@ -199,13 +201,31 @@ const ClassDetais = ({ batchName, user }) => {
     }
   };
 
+  const updateBatchGmeet = async () => {
+    console.log("data", finalLinkGmeet);
+
+    if (finalLinkGmeet === "") {
+      console.log("empty", finalLinkGmeet);
+      return;
+    }
+
+    if (finalLinkGmeet !== "") {
+      await updateBatchLink(batchId, finalLinkGmeet);
+      window.location.reload();
+    }
+  };
+
+  console.log(finalLinkGmeet);
+
   return (
     <>
       {detail[0] && sheduleData && (
-        <div  style={{height: '65vh'}} className="overflow-y-scroll">
+        <div style={{ height: "65vh" }} className="overflow-y-scroll">
           <div className="px-20 w-full grid grid-cols-2 gap-5  ">
             <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
-              <h1 className="p-5 text-xl font-bold border-b-2 animate-popupSlide  border-lime-600">Batch Details</h1>
+              <h1 className="p-5 text-xl font-bold border-b-2 animate-popupSlide  border-lime-600">
+                Batch Details
+              </h1>
               <div className="px-5 w-full grid grid-cols-3 gap-5 animate-popupSlide">
                 <div className="col-span-1 p-3">
                   <span className="text-lg font-bold mr-10">Name </span>
@@ -220,16 +240,16 @@ const ClassDetais = ({ batchName, user }) => {
                   <span className="">{sheduleData[0].schedule.startDate} </span>
                 </div>
                 <div className="col-span-2 p-3">
-                  
                   <span className="flex flex-row">
-                  <span className="text-lg font-bold mr-10">Days </span>
-                    {sheduleData && 
+                    <span className="text-lg font-bold mr-10">Days </span>
+                    {sheduleData &&
                       sheduleData[0].schedule.days.map((day) => (
                         <span
-                          
                           className="transition-all ease-out hover:ease-in hover:scale-105 rounded-3xl px-5 py-1 border-2 m-1 text-center border-lime-500"
                           color="success"
-                        >{day}</span>
+                        >
+                          {day}
+                        </span>
                       ))}
                   </span>
                 </div>
@@ -239,18 +259,37 @@ const ClassDetais = ({ batchName, user }) => {
                 </div>
               </div>
             </div>
-            
+
             <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
-              <h1 className="p-5 text-xl font-bold border-b-2  border-lime-600 animate-popupSlide">Join Class</h1>
+              <h1 className="p-5 text-xl font-bold border-b-2  border-lime-600 animate-popupSlide">
+                Join Class
+              </h1>
               <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center  ">
                 <div className=" m-10 w-full  col-span-3">
                   <label className="text-lg font-bold">Class Link</label>
                   <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-200  rounded-lg  animate-popupSlide">
-                    {detail[0].g_meet}
+                    {/* {detail[0].g_meet} */}
+                    {user !== "student" && (
+                      <div>
+                        <input
+                          type="text"
+                          className=" m-4 rounded-lg w-96"
+                          defaultValue={detail[0].g_meet}
+                          onChange={(e) => setFinalLinkGmeet(e.target.value)}
+                        />
+                        <button
+                          onClick={updateBatchGmeet}
+                          className=" bg-slate-400 text-black p-2 rounded-lg shadow-lg"
+                        >
+                          Edit Link
+                        </button>
+                      </div>
+                    )}
                   </span>
                 </div>
-                <div className="  my-5 col-span-2">
-                  <div className="flex items-center justify-end animate-popupSlide ">
+
+                <div className="col-span-1">
+                  <div className="flex items-center justify-end animate-popupSlide w-full">
                     <Link
                       href={detail[0].g_meet}
                       target="_blank"
@@ -259,8 +298,8 @@ const ClassDetais = ({ batchName, user }) => {
                       {isDisabled && (
                         <Button
                           variant="contained"
-                          style={{backgroundColor: 'rgb(101 163 13)'}}
-                          className=" w-full transition-all duration-150 hover:scale-105 animate-wiggle "
+                          style={{ backgroundColor: "rgb(101 163 13)" }}
+                          className=" w-60 transition-all duration-150 hover:scale-105 animate-wiggle "
                           onClick={startingLiveClass}
                         >
                           Join Class
@@ -305,54 +344,53 @@ const ClassDetais = ({ batchName, user }) => {
                 </List>
               </div>
             )}
-          </div>
-
-          {user !== "student" && (
-            <Modal
-              open={open}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box
-                sx={style}
-                className="bg-white rounded-md"
-                style={{ width: "720px" }}
+            {user !== "student" && (
+              <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
               >
-                <div className="my-2 grid grid-cols-4">
-                  <div className="text-start col-span-2">
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Attendance for class{" "}
-                    </Typography>
+                <Box
+                  sx={style}
+                  className="bg-white rounded-md"
+                  style={{ width: "720px" }}
+                >
+                  <div className="my-2 grid grid-cols-4">
+                    <div className="text-start col-span-2">
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Attendance for class{" "}
+                      </Typography>
+                    </div>
                   </div>
-                </div>
-                {enrollStudents && (
-                  <div className="my-5">
-                    <AttandanceListStudent
-                      type="markAttendance"
-                      enrollStudents={enrollStudents}
-                    />
+                  {enrollStudents && (
+                    <div className="my-5">
+                      <AttandanceListStudent
+                        type="markAttendance"
+                        enrollStudents={enrollStudents}
+                      />
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-10">
+                    <div className="col-span-1">
+                      <Button
+                        className="mt-5 w-full bg-yellow-600"
+                        variant="contained"
+                        color="error"
+                        onClick={startSession}
+                        endIcon={<RotateLeftIcon />}
+                      >
+                        End Class
+                      </Button>
+                    </div>
                   </div>
-                )}
-                <div className="grid grid-cols-2 gap-10">
-                  <div className="col-span-1">
-                    <Button
-                      className="mt-5 w-full bg-yellow-600"
-                      variant="contained"
-                      color="error"
-                      onClick={startSession}
-                      endIcon={<RotateLeftIcon />}
-                    >
-                      End Class
-                    </Button>
-                  </div>
-                </div>
-              </Box>
-            </Modal>
-          )}
+                </Box>
+              </Modal>
+            )}
+          </div>
         </div>
       )}
     </>
@@ -360,3 +398,22 @@ const ClassDetais = ({ batchName, user }) => {
 };
 
 export default ClassDetais;
+
+// <div className="  my-5 col-span-2">
+// <div className="flex items-center justify-end animate-popupSlide ">
+//   <Link
+//     href={detail[0].g_meet}
+//     target="_blank"
+//     className="w-full"
+//   >
+//     {isDisabled && (
+//       <Button
+//         variant="contained"
+//         style={{backgroundColor: 'rgb(101 163 13)'}}
+//         className=" w-full transition-all duration-150 hover:scale-105 animate-wiggle "
+//         onClick={startingLiveClass}
+//       >
+//         Join Class
+//       </Button>
+//     )}
+//   </Link>
