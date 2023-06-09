@@ -135,6 +135,8 @@ const ClassDetais = ({ batchName, user }) => {
   //filtering the bathches data
   const detail = batchDetail.filter((batch) => batch.batch_name === batchName);
 
+  console.log("==== B Details======", detail);
+
   let arr;
   if (scheduleDetail) {
     arr = JSON.parse(scheduleDetail);
@@ -258,13 +260,7 @@ const ClassDetais = ({ batchName, user }) => {
                   <span className="">{sheduleData[0].schedule.time}</span>
                 </div>
               </div>
-            </div>
-
-            <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
-              <h1 className="p-5 text-xl font-bold border-b-2  border-lime-600 animate-popupSlide">
-                Join Class
-              </h1>
-              <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center  ">
+              <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center border-t-2   border-lime-600 ">
                 <div className=" m-10 w-full  col-span-3">
                   <label className="text-lg font-bold">Class Link</label>
                   <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-200  rounded-lg  animate-popupSlide">
@@ -290,24 +286,39 @@ const ClassDetais = ({ batchName, user }) => {
 
                 <div className="col-span-1">
                   <div className="flex items-center justify-end animate-popupSlide w-full">
-                    <Link
-                      href={detail[0].g_meet}
-                      target="_blank"
-                      className="w-full"
-                    >
-                      {isDisabled && (
+                    
+                      {isDisabled ? (
+                        <Link
+                        href={detail[0].g_meet}
+                        target="_blank"
+                        className="w-full"
+                      >
                         <Button
                           variant="contained"
                           style={{ backgroundColor: "rgb(101 163 13)" }}
-                          className=" w-60 transition-all duration-150 hover:scale-105 animate-wiggle "
+                          className=" w-80 transition-all duration-150 hover:scale-105  "
                           onClick={startingLiveClass}
                         >
                           Join Class
                         </Button>
+                        </Link>
+                      ) : (
+                        <div
+     
+                        className="w-full">
+                        <Button
+                          variant="contained"
+                          disabled
+                          style={{ backgroundColor: "rgba(0, 0, 0, 0.15)", color: 'lightgray' }}
+                          className=" w-80 cursor-wait "
+                        >
+                          Wait for the Class time to Start
+                        </Button>
+                        </div>
                       )}
-                    </Link>
+                    
 
-                    <div className=" w-96 animate-popupSlide">
+                    {/* <div className=" w-96 animate-popupSlide">
                       {!isDisabled && <span className="">Days - </span>}
                       {!isDisabled &&
                         sheduleData[0].schedule.days.map((day) => (
@@ -326,11 +337,13 @@ const ClassDetais = ({ batchName, user }) => {
                           </span>
                         </span>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
+
+            
             {user !== "student" && (
               <div className="col-span-3 bg-white rounded-md">
                 <h1 className="p-5 border-b-2">Students List</h1>

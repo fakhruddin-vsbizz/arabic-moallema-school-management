@@ -4,7 +4,7 @@ function WarningCard(props) {
   const { title, message } = props;
 
   return (
-    <div className="bg-white border-l-4 border-blue-400 text-dark-purple p-4 mt-4 w-full rounded-md shadow-md">
+    <div className="bg-white border-l-4 border-blue-400 text-dark-purple p-4 mt-4 w-full rounded-md shadow-md animate-popupSlide ">
       <div className="flex items-center justify-center ">
         <div className="flex-shrink-0">
           <h3 className="text-lg font-semibold p-2 border-b-2 border-blue-400 rounded-sm">
