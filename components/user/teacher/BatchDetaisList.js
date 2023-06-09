@@ -33,7 +33,7 @@ import BatchContext from "@/components/Context/store/batch-context";
 import { useRouter } from "next/router";
 import { fetchStudentsData } from "@/backend/Students/StudentDB";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
-import Spinner from "@/components/Layout/spinner/Spinner";
+import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
 import { updateBatchLink } from "@/backend/Batches/UpdateBatchTeacher";
 const style = {
@@ -220,67 +220,55 @@ const ClassDetais = ({ batchName, user }) => {
   return (
     <>
       {detail[0] && sheduleData && (
-        <div className="">
-          <div className="">
-            <div className="px-20 w-full grid grid-cols-3 gap-5 ">
-              <div className="col-span-2 bg-white rounded-md">
-                <h1 className="p-5 border-b-2">Batch Details</h1>
-                <div className="px-5 w-full grid grid-cols-2 gap-5">
-                  <div className="col-span-1 p-3">
-                    <span className="text-lg font-bold mr-10">Name </span>
-                    <span className="font-light">{detail[0].batch_name}</span>
-                  </div>
-                  <div className="col-span-1 p-3 ">
-                    <span className="text-lg font-bold mr-10">Batch Type</span>
-                    <span className="font-light">{detail[0].type}</span>
-                  </div>
-                  <div className="col-span-1 p-3">
-                    <span className="text-lg font-bold mr-10">Start Date </span>
-                    <span className="font-light">
-                      {sheduleData[0].schedule.startDate}{" "}
-                    </span>
-                  </div>
-                  <div className="col-span-1 p-3">
-                    <span className="text-lg font-bold mr-10">Start Time </span>
-                    <span className="font-light">
-                      {sheduleData[0].schedule.time}
-                    </span>
-                  </div>
-                  <div className="col-span-2 p-3">
+        <div style={{ height: "65vh" }} className="overflow-y-scroll">
+          <div className="px-20 w-full grid grid-cols-2 gap-5  ">
+            <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
+              <h1 className="p-5 text-xl font-bold border-b-2 animate-popupSlide  border-lime-600">
+                Batch Details
+              </h1>
+              <div className="px-5 w-full grid grid-cols-3 gap-5 animate-popupSlide">
+                <div className="col-span-1 p-3">
+                  <span className="text-lg font-bold mr-10">Name </span>
+                  <span className="">{detail[0].batch_name}</span>
+                </div>
+                <div className="col-span-1 p-3 ">
+                  <span className="text-lg font-bold mr-10">Batch Type</span>
+                  <span className="">{detail[0].type}</span>
+                </div>
+                <div className="col-span-1 p-3">
+                  <span className="text-lg font-bold mr-10">Start Date </span>
+                  <span className="">{sheduleData[0].schedule.startDate} </span>
+                </div>
+                <div className="col-span-2 p-3">
+                  <span className="flex flex-row">
                     <span className="text-lg font-bold mr-10">Days </span>
-                    <span className="font-light">
-                      {" "}
-                      {sheduleData &&
-                        sheduleData[0].schedule.days.map((day) => (
-                          <Chip label={day} color="success" />
-                        ))}
-                    </span>
-                  </div>
+                    {sheduleData &&
+                      sheduleData[0].schedule.days.map((day) => (
+                        <span
+                          className="transition-all ease-out hover:ease-in hover:scale-105 rounded-3xl px-5 py-1 border-2 m-1 text-center border-lime-500"
+                          color="success"
+                        >
+                          {day}
+                        </span>
+                      ))}
+                  </span>
+                </div>
+                <div className="col-span-1 p-3">
+                  <span className="text-lg font-bold mr-10">Start Time </span>
+                  <span className="">{sheduleData[0].schedule.time}</span>
                 </div>
               </div>
-              {user !== "student" && (
-                <div className="col-span-1 bg-white rounded-md">
-                  <h1 className="p-5 border-b-2">Students List</h1>
-                  <List sx={{ width: "200%", maxWidth: 360 }}>
-                    {enrollStudents &&
-                      enrollStudents.map((student, index) => (
-                        <ListItem key={index}>
-                          <ListItemText primary={student} />
-                        </ListItem>
-                      ))}
-                  </List>
-                </div>
-              )}
-              <div className="col-span-3 bg-white rounded-md">
-                <h1 className="p-5 border-b-2">Batch Details</h1>
-                <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center bg-slate-50 ">
-                  <div className=" m-10 w-full  col-span-3">
-                    <label>G Meet</label>
-                    {user === "student" && (
-                      <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-black  rounded-lg shadow-md ">
-                        {detail[0].g_meet}
-                      </span>
-                    )}
+            </div>
+
+            <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
+              <h1 className="p-5 text-xl font-bold border-b-2  border-lime-600 animate-popupSlide">
+                Join Class
+              </h1>
+              <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center  ">
+                <div className=" m-10 w-full  col-span-3">
+                  <label className="text-lg font-bold">Class Link</label>
+                  <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-200  rounded-lg  animate-popupSlide">
+                    {/* {detail[0].g_meet} */}
                     {user !== "student" && (
                       <div>
                         <input
@@ -297,97 +285,112 @@ const ClassDetais = ({ batchName, user }) => {
                         </button>
                       </div>
                     )}
-                  </div>
-                  <div className="  my-5 col-span-2">
-                    <div className="flex items-center justify-end ">
-                      <Link
-                        href={detail[0].g_meet}
-                        target="_blank"
-                        className="w-full"
-                      >
-                        {isDisabled && (
-                          <Button
-                            variant="contained"
-                            className=" w-full bg-dark-purple "
-                            onClick={startingLiveClass}
-                          >
-                            Join Class
-                          </Button>
-                        )}
-                      </Link>
+                  </span>
+                </div>
 
-                      <div className=" w-96">
-                        {!isDisabled && <span className="">Days - </span>}
-                        {!isDisabled &&
-                          sheduleData[0].schedule.days.map((day) => (
-                            <span
-                              name="role"
-                              className=" text-red-600 focus:outline-none border-x-1"
-                            >
-                              {day},
-                            </span>
-                          ))}
-                        {!isDisabled && (
-                          <span className="block mt-2 ">
-                            Timing -
-                            <span className=" text-red-600">
-                              {sheduleData[0].schedule.time}
-                            </span>
+                <div className="col-span-1">
+                  <div className="flex items-center justify-end animate-popupSlide w-full">
+                    <Link
+                      href={detail[0].g_meet}
+                      target="_blank"
+                      className="w-full"
+                    >
+                      {isDisabled && (
+                        <Button
+                          variant="contained"
+                          style={{ backgroundColor: "rgb(101 163 13)" }}
+                          className=" w-60 transition-all duration-150 hover:scale-105 animate-wiggle "
+                          onClick={startingLiveClass}
+                        >
+                          Join Class
+                        </Button>
+                      )}
+                    </Link>
+
+                    <div className=" w-96 animate-popupSlide">
+                      {!isDisabled && <span className="">Days - </span>}
+                      {!isDisabled &&
+                        sheduleData[0].schedule.days.map((day) => (
+                          <span
+                            name="role"
+                            className=" text-red-600 focus:outline-none border-x-1"
+                          >
+                            {day},
                           </span>
-                        )}
-                      </div>
+                        ))}
+                      {!isDisabled && (
+                        <span className="block mt-2 ">
+                          Timing -
+                          <span className=" text-red-600">
+                            {sheduleData[0].schedule.time}
+                          </span>
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          {user !== "student" && (
-            <Modal
-              open={open}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box
-                sx={style}
-                className="bg-white rounded-md"
-                style={{ width: "720px" }}
+            {user !== "student" && (
+              <div className="col-span-3 bg-white rounded-md">
+                <h1 className="p-5 border-b-2">Students List</h1>
+                <List sx={{ width: "200%", maxWidth: 360 }}>
+                  {enrollStudents &&
+                    enrollStudents.map((student, index) => (
+                      <ListItem key={index}>
+                        <ListItemText primary={student} />
+                      </ListItem>
+                    ))}
+                </List>
+              </div>
+            )}
+            {user !== "student" && (
+              <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
               >
-                <div className="my-2 grid grid-cols-4">
-                  <div className="text-start col-span-2">
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Attendance for class{" "}
-                    </Typography>
+                <Box
+                  sx={style}
+                  className="bg-white rounded-md"
+                  style={{ width: "720px" }}
+                >
+                  <div className="my-2 grid grid-cols-4">
+                    <div className="text-start col-span-2">
+                      <Typography
+                        id="modal-modal-title"
+                        variant="h6"
+                        component="h2"
+                      >
+                        Attendance for class{" "}
+                      </Typography>
+                    </div>
                   </div>
-                </div>
-                {enrollStudents && (
-                  <div className="my-5">
-                    <AttandanceListStudent
-                      type="markAttendance"
-                      enrollStudents={enrollStudents}
-                    />
+                  {enrollStudents && (
+                    <div className="my-5">
+                      <AttandanceListStudent
+                        type="markAttendance"
+                        enrollStudents={enrollStudents}
+                      />
+                    </div>
+                  )}
+                  <div className="grid grid-cols-2 gap-10">
+                    <div className="col-span-1">
+                      <Button
+                        className="mt-5 w-full bg-yellow-600"
+                        variant="contained"
+                        color="error"
+                        onClick={startSession}
+                        endIcon={<RotateLeftIcon />}
+                      >
+                        End Class
+                      </Button>
+                    </div>
                   </div>
-                )}
-                <div className="grid grid-cols-2 gap-10">
-                  <div className="col-span-1">
-                    <Button
-                      className="mt-5 w-full bg-yellow-600"
-                      variant="contained"
-                      color="error"
-                      onClick={startSession}
-                      endIcon={<RotateLeftIcon />}
-                    >
-                      End Class
-                    </Button>
-                  </div>
-                </div>
-              </Box>
-            </Modal>
-          )}
+                </Box>
+              </Modal>
+            )}
+          </div>
         </div>
       )}
     </>
@@ -395,3 +398,22 @@ const ClassDetais = ({ batchName, user }) => {
 };
 
 export default ClassDetais;
+
+// <div className="  my-5 col-span-2">
+// <div className="flex items-center justify-end animate-popupSlide ">
+//   <Link
+//     href={detail[0].g_meet}
+//     target="_blank"
+//     className="w-full"
+//   >
+//     {isDisabled && (
+//       <Button
+//         variant="contained"
+//         style={{backgroundColor: 'rgb(101 163 13)'}}
+//         className=" w-full transition-all duration-150 hover:scale-105 animate-wiggle "
+//         onClick={startingLiveClass}
+//       >
+//         Join Class
+//       </Button>
+//     )}
+//   </Link>

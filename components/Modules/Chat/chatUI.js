@@ -264,7 +264,7 @@ export default function ChatUI({ user }) {
             >
               <div className="bg-dark-purple w-screen ">
                 <div className=" flex">
-                  <div className="w-1/5 flex">
+                  <div className="w-1/5 flex animate-popupSlide">
                     <Link href={`/${user}`}>
                       <IconButton aria-label="delete" size="large">
                         <ArrowBackIcon
@@ -279,9 +279,9 @@ export default function ChatUI({ user }) {
                     </p>
                   </div>
                   <div className="w-2/5 flex"></div>
-                  <div className="w-2/5 px-5">
+                  <div className="w-2/5 px-5 ">
                     {user === "teacher" && (
-                      <div className="flex">
+                      <div className="flex animate-popupSlide">
                         <p className="w-40 mt-4 text-white">Selected Batch:</p>
                         <select
                           value={selectedBatch}
@@ -309,7 +309,7 @@ export default function ChatUI({ user }) {
 
                       return (
                         <div
-                          className={`w-full py-1 px-2 pb-5 border-gray-200 ${
+                          className={`w-full py-1 px-2 pb-5 border-gray-200 animate-popupSlide ${
                             isOwnMessage ? "text-right" : "text-left"
                           }`}
                           key={i}
@@ -346,13 +346,12 @@ export default function ChatUI({ user }) {
                             </label>
                             {msg.message}
                             <span className="text-[9px] pl-5 ">
-                            {console.log("Date")}
+                              {console.log("Date")}
                               {new Date(msg.created_at).toLocaleTimeString([], {
                                 hour: "2-digit",
                                 minute: "2-digit",
                                 // second: "2-digit",
                               })}
-                              
                             </span>
                           </span>
                         </div>
@@ -361,29 +360,37 @@ export default function ChatUI({ user }) {
                   })}
               </div>
 
-              <div className="border-4 border-dark-purple w-full flex rounded-bl-md">
+              <div className="border-4 border-t-dark-purple w-full flex p-1 rounded-bl-md">
                 <input
                   type="text"
                   placeholder="New message..."
                   value={message}
-                  className="outline-none py-2 px-2 rounded-bl-md flex-1 border-dark-purple border-2 rounded-sm"
+                  className="outline-none py-2 px-2 rounded-l-xl flex-1 border-x-dark-purple border-2 rounded-sm animate-popupSlide"
                   onChange={(e) => setMessage(e.target.value)}
                   onKeyUp={handleKeypress}
                 />
-                <div className="border-2 rounded-md border-white bg-dark-purple flex justify-center items-center  rounded-br-md group hover:bg-gray-100 transition-all">
+                <div className="border-2 rounded-full border-white bg-dark-purple hover:bg-amber-400 hover:text-dark-purple ml-2  flex justify-center items-center group transition-all animate-popupSlide">
                   {/* <button
                     className="group-hover:text-dark-purple px-3 h-full text-gray-100"
                     
                   >
                     Send
                   </button> */}
-                  <Button
-                    variant="contained"
+                  <IconButton
+                    aria-label="send"
+                    className="text-white hover:animate-wiggleFull"
                     onClick={sendMessage}
+                    size="large"
+                  >
+                    <SendIcon fontSize="inherit" className="text-white" />
+                  </IconButton>
+                  {/* <Button
+                    variant="contained"
+                    
                     endIcon={<SendIcon />}
                   >
-                    Send
-                  </Button>
+                    Send 
+                  </Button> */}
                 </div>
               </div>
             </div>

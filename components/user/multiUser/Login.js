@@ -72,10 +72,10 @@ export default function App() {
           }}
           variant="outlined"
         >
-         <div className="bg-white border-2 rounded-md my-5 p-5">
+         <div className="bg-white border-2 rounded-md my-5 p-5 animate-popupSlide">
          <div className="">
             <img
-              className="mx-auto mt-5  w-5/6 p-10"
+              className="mx-auto mt-5  w-5/6 p-10 animate-wiggle"
               src={logo.src}
               alt="Logo"
             />
@@ -86,7 +86,7 @@ export default function App() {
             >
               <b>Welcome</b>
             </Typography>
-            <Typography level="body2" className="text-center ">
+            <Typography level="body2" className="text-center animate-pulse ">
               Sign in to continue.
             </Typography>
           </div>
@@ -125,7 +125,7 @@ export default function App() {
           {/* <Button className='bg-blue-500 text-center text-whit w-full' sx={{ mt: 1  }}><Link href="/" className="w-full text-center text-white">Log in</Link></Button>  */}
           <Button
             onClick={handleLoginSubmit}
-            className="bg-blue-500 text-center text-whit w-full"
+            className="bg-blue-500 text-center text-whit w-full animate-wiggle"
             sx={{ mt: 1 }}
           >
             Log in
