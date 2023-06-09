@@ -75,7 +75,7 @@ export default function App() {
          <div className="bg-white border-2 rounded-md my-5 p-5 animate-popupSlide">
          <div className="">
             <img
-              className="mx-auto mt-5  w-5/6 p-10 animate-wiggle"
+              className="mx-auto mt-5  w-5/6 p-10 "
               src={logo.src}
               alt="Logo"
             />
@@ -125,7 +125,7 @@ export default function App() {
           {/* <Button className='bg-blue-500 text-center text-whit w-full' sx={{ mt: 1  }}><Link href="/" className="w-full text-center text-white">Log in</Link></Button>  */}
           <Button
             onClick={handleLoginSubmit}
-            className="bg-blue-500 text-center text-whit w-full animate-wiggle"
+            className="bg-blue-500 text-center text-whit w-full "
             sx={{ mt: 1 }}
           >
             Log in

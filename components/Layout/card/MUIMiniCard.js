@@ -57,7 +57,7 @@ const MUIMiniCard = ({
       
         <Card
           sx={{ minWidth: 180, backgroundColor: 'rgb(107 114 128)', color: 'white' }}
-          className="p-4 w-full  hover:bg-lime-500 bg-gray-500  text-white transition duration-150 ease-out hover:ease-in  hover:animate-wiggle text-bold place-content-center text-center shadow-lg flex-row"
+          className="p-4 w-full  hover:bg-lime-500 bg-gray-500  text-white transition duration-150 ease-out hover:ease-in   text-bold place-content-center text-center shadow-lg flex-row"
         >
           <CardContent className="text-bold whitespace-normal animate-popupSlide hover:animate-popupSlide">
             <Typography className="text-md" gutterBottom>
@@ -77,7 +77,7 @@ const MUIMiniCard = ({
                   <Button
                     size="medium"
                     style={{ backgroundColor: 'rgb(132 204 22)', color: 'white', border: '2px solid rgb(107 114 128)'  }}
-                    className="text-center w-48 border-2 border-white bg-lime-500 text-white hover:bg-orange-500 hover:animate-wiggle"
+                    className="text-center w-48 border-2 border-white bg-lime-500 text-white hover:bg-orange-500 "
                   >
                     {btnText}
                   </Button>
@@ -90,7 +90,7 @@ const MUIMiniCard = ({
               <Divider variant="middle" className="my-2 bg-gray-200" />
               <CardActions className=" place-content-center">
                 <Button size="medium" className="text-center w-48 border-2">
-                  <Chip label={chipLable} color="warning" variant="outlined" />
+                  <Chip label={chipLable} style={{color: 'white'}} variant="outlined" />
                 </Button>
               </CardActions>
             </div>

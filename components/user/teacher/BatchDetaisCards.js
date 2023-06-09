@@ -3,7 +3,7 @@ import Link from "next/link";
 import CardLayout from "@/components/Layout/card/CardLayout";
 import MUISlider from "@/components/Layout/slider/MUISlider";
 import MUIMiniCard from "@/components/Layout/card/MUIMiniCard";
-import { Chip, Grow, LinearProgress } from "@mui/material";
+import { Button, Chip, Grow, LinearProgress } from "@mui/material";
 import { Box } from "@mui/system";
 import AuthContext from "@/components/Context/store/auth-context";
 // import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
@@ -62,11 +62,28 @@ const ClassDetais = ({ batchName, user }) => {
       <div className="px-3 lg:px-8 w-full">
         <div className=" w-full animate-popupSlide ">
           <CardLayout
-            firstComp=<div>
-              <h1 className="text-2xl lg:text-3xl text-white animate-popupSlide">
-                {batchName}
-              </h1>
+            firstComp=<div className="animate-popupSlide">
+              <h2 className="text-2xl lg:text-3xl text-white ">
+                {batchName} 
+              </h2>
+              <h4 className="text-2xl lg:text-xl text-white " >Current Session: sessionX </h4>
             </div>
+            secondComp=<div className="animate-popupSlide  ">
+              <h2 className="text-2xl lg:text-xl text-white ">
+                Date: xx/xx/xxxx
+              </h2>
+              <Link href={`/${user}/class`}>
+                  <Button
+                    size="medium"
+                    style={{ backgroundColor: 'rgb(132 204 22)', color: 'white',    }}
+                    className="text-center w-48 border-2 border-white bg-lime-500 text-white hover:bg-orange-500 "
+                  >
+                    Go to Class
+                  </Button>
+                </Link>
+            </div>
+
+           
           />
         </div>
         <h1 className="text-lg  mt-10">Completed Classes</h1>
@@ -114,8 +131,8 @@ const ClassDetais = ({ batchName, user }) => {
                   <MUIMiniCard
                     title={`session ${chapter.session_id}`}
                     disc={chapter.starting_time}
-                    isBtn={false}
-                    btnText="View"
+                    isChip={true}
+                    chipLable="Attended"
                     // link={`/student/chapter-detail/${chapter}/${batchName}`}
                   />
                 </div>
