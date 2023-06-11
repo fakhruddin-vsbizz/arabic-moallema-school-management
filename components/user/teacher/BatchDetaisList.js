@@ -12,6 +12,7 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  Alert
 } from "@mui/material";
 import { Box } from "@mui/system";
 import InputWithLable from "@/components/Layout/elements/InputWithLable";
@@ -36,6 +37,11 @@ import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import { useEffect } from "react";
 import { updateBatchLink } from "@/backend/Batches/UpdateBatchTeacher";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import ClassIcon from '@mui/icons-material/Class';
+import GroupIcon from '@mui/icons-material/Group';
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -223,71 +229,68 @@ const ClassDetais = ({ batchName, user }) => {
     <>
       {detail[0] && sheduleData && (
         <div style={{ height: "65vh" }} className="overflow-y-scroll">
-          <div className="px-20 w-full grid grid-cols-2 gap-5  ">
-            <div className="col-span-3 bg-gray-500 rounded-xl border-b-4 text-gray-50 border-lime-500 animate-popupSlide">
-              <h1 className="p-5 text-xl font-bold border-b-2 animate-popupSlide  border-lime-600">
-                Batch Details
-              </h1>
-              <div className="px-5 w-full grid grid-cols-3 gap-5 animate-popupSlide">
-                <div className="col-span-1 p-3">
-                  <span className="text-lg font-bold mr-10">Name </span>
-                  <span className="">{detail[0].batch_name}</span>
-                </div>
-                <div className="col-span-1 p-3 ">
-                  <span className="text-lg font-bold mr-10">Batch Type</span>
-                  <span className="">{detail[0].type}</span>
-                </div>
-                <div className="col-span-1 p-3">
-                  <span className="text-lg font-bold mr-10">Start Date </span>
-                  <span className="">{sheduleData[0].schedule.startDate} </span>
-                </div>
-                <div className="col-span-2 p-3">
-                  <span className="flex flex-row">
-                    <span className="text-lg font-bold mr-10">Days </span>
-                    {sheduleData &&
-                      sheduleData[0].schedule.days.map((day) => (
-                        <span
-                          className="transition-all ease-out hover:ease-in hover:scale-105 rounded-3xl px-5 py-1 border-2 m-1 text-center border-lime-500"
-                          color="success"
-                        >
-                          {day}
-                        </span>
-                      ))}
-                  </span>
-                </div>
-                <div className="col-span-1 p-3">
-                  <span className="text-lg font-bold mr-10">Start Time </span>
-                  <span className="">{sheduleData[0].schedule.time}</span>
-                </div>
-              </div>
-              <div className="w-full grid grid-cols-5 gap-20 rounded-lg overflow-hidden shadow-lg  items-center justify-center border-t-2   border-lime-600 ">
-                <div className=" m-10 w-full  col-span-3">
-                  <label className="text-lg font-bold">Class Link</label>
-                  <span class="ml-10 inline-flex items-center justify-center px-4 py-2 text-base font-medium text-gray-200  rounded-lg  animate-popupSlide">
-                    {/* {detail[0].g_meet} */}
-                    {user !== "student" && (
-                      <div>
-                        <input
-                          type="text"
-                          className=" m-4 rounded-lg w-96"
-                          defaultValue={detail[0].g_meet}
-                          onChange={(e) => setFinalLinkGmeet(e.target.value)}
-                        />
-                        <button
-                          onClick={updateBatchGmeet}
-                          className=" bg-slate-400 text-black p-2 rounded-lg shadow-lg"
-                        >
-                          Edit Link
-                        </button>
-                      </div>
-                    )}
-                  </span>
-                </div>
+          <center>
+            <div style={{ width:'90%', borderRadius:'15px', backgroundColor:'#00aa6c',fontSize:'160%', fontFamily:'Segoe UI', padding:'1.5%', fontWeight:'500', textAlign:'left', color:'white' }}>
+              Batch Details
+            </div>
 
-                <div className="col-span-1">
-                  <div className="flex items-center justify-end animate-popupSlide w-full">
-                    
-                      {isDisabled ? (
+            <br/>
+
+            
+              <div className="bg-white" style={{ borderRadius:'15px', padding:'3%', fontSize:'110%', textAlign:'left', width:'90%' }}>
+                <div className="grid grid-cols-2 gap-2">
+                  <div><label>Name</label><br/><label className="text-md mr-10"><b><ClassIcon/>&nbsp;&nbsp;{detail[0].batch_name}</b></label></div>
+                  <div><label>Batch Type</label><br/><label className="text-md mr-10"><b><GroupIcon/>&nbsp;&nbsp;{detail[0].type}</b></label></div>
+                </div>
+                <br/>
+                
+                <hr></hr>
+                <br/>
+
+                <div><label>Days on which this batch is actively studying</label><br/><br/>
+                  <label className="text-md mr-10">
+                  {sheduleData &&
+                    sheduleData[0].schedule.days.map((day) => (
+                      <span
+                        className="transition-all ease-out hover:ease-in hover:scale-105 rounded-3xl px-5 py-1 border-2 m-1 text-center border-sky-600	"
+                        color="success"
+                      >
+                        <b>{day}</b>
+                      </span>
+                    ))}
+                  </label>
+                </div>
+                
+              </div>
+              <br/><br/>
+              <div className="bg-white" style={{ borderRadius:'15px', padding:'3%', fontSize:'110%', textAlign:'left', width:'90%'  }}>
+                <div className="grid grid-cols-2 gap-2">
+                  <div><label>Batch started since</label><br/><label className="text-md mr-10"><b><CalendarMonthIcon/>&nbsp;&nbsp;{sheduleData[0].schedule.startDate}</b></label></div>
+                  <div><label>Everyday starting time:</label><br/><label className="text-md mr-10"><b><AccessAlarmIcon/>&nbsp;&nbsp;{sheduleData[0].schedule.time}</b></label></div>
+                </div>
+                <br/>
+                
+                <hr></hr>
+                <br/>
+
+                <div><label>You can edit the class meet link below:</label><br/><br/>
+                  <label className="text-md mr-10">
+                  <input
+                    type="text"
+                    className=" m-4 rounded-lg w-96"
+                    defaultValue={detail[0].g_meet}
+                    onChange={(e) => setFinalLinkGmeet(e.target.value)}
+                  />
+                  <Button
+                    variant='contained'
+                    onClick={updateBatchGmeet}
+                    className="text-black p-2 rounded-lg shadow-lg"
+                    style={{ textTransform:'none' }}
+                  >
+                    Edit Link
+                  </Button>
+                  </label>
+                  {isDisabled ? (
                         <Link
                         href={detail[0].g_meet}
                         target="_blank"
@@ -296,7 +299,7 @@ const ClassDetais = ({ batchName, user }) => {
                         <Button
                           variant="contained"
                           style={{ backgroundColor: "rgb(101 163 13)" }}
-                          className=" w-80 transition-all duration-150 hover:scale-105  "
+                          className=" w-80 transition-all duration-150 hover:scale-105"
                           onClick={startingLiveClass}
                         >
                           Join Class
@@ -306,104 +309,66 @@ const ClassDetais = ({ batchName, user }) => {
                         <div
      
                         className="w-full">
-                        <Button
-                          variant="contained"
-                          disabled
-                          style={{ backgroundColor: "rgba(0, 0, 0, 0.15)", color: 'lightgray' }}
-                          className=" w-80 cursor-wait "
-                        >
-                          Wait for the Class time to Start
-                        </Button>
+                          <Alert severity="info">No class sessions today.</Alert>
+                        
                         </div>
                       )}
-                    
+                </div>
+                
+              </div>
+            
 
-                    {/* <div className=" w-96 animate-popupSlide">
-                      {!isDisabled && <span className="">Days - </span>}
-                      {!isDisabled &&
-                        sheduleData[0].schedule.days.map((day) => (
-                          <span
-                            name="role"
-                            className=" text-red-600 focus:outline-none border-x-1"
-                          >
-                            {day},
-                          </span>
-                        ))}
-                      {!isDisabled && (
-                        <span className="block mt-2 ">
-                          Timing -
-                          <span className=" text-red-600">
-                            {sheduleData[0].schedule.time}
-                          </span>
-                        </span>
-                      )}
-                    </div> */}
+          </center>
+          
+
+          {user !== "student" && (
+            <Modal
+              open={open}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box
+                sx={style}
+                className="bg-white rounded-md"
+                style={{ width: "720px" }}
+              >
+                <div className="my-2 grid grid-cols-4">
+                  <div className="text-start col-span-2">
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      Attendance for class{" "}
+                    </Typography>
                   </div>
                 </div>
-              </div>
-            </div>
+                {enrollStudents && (
+                  <div className="my-5">
+                    <AttandanceListStudent
+                      type="markAttendance"
+                      enrollStudents={enrollStudents}
+                    />
+                  </div>
+                )}
+                <div className="grid grid-cols-2 gap-10">
+                  <div className="col-span-1">
+                    <Button
+                      className="mt-5 w-full bg-yellow-600"
+                      variant="contained"
+                      color="error"
+                      onClick={startSession}
+                      endIcon={<RotateLeftIcon />}
+                    >
+                      End Class
+                    </Button>
+                  </div>
+                </div>
+              </Box>
+            </Modal>
+          )}
 
-            
-            {user !== "student" && (
-              <div className="col-span-3 bg-white rounded-md">
-                <h1 className="p-5 border-b-2">Students List</h1>
-                <List sx={{ width: "200%", maxWidth: 360 }}>
-                  {enrollStudents &&
-                    enrollStudents.map((student, index) => (
-                      <ListItem key={index}>
-                        <ListItemText primary={student} />
-                      </ListItem>
-                    ))}
-                </List>
-              </div>
-            )}
-            {user !== "student" && (
-              <Modal
-                open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-              >
-                <Box
-                  sx={style}
-                  className="bg-white rounded-md"
-                  style={{ width: "720px" }}
-                >
-                  <div className="my-2 grid grid-cols-4">
-                    <div className="text-start col-span-2">
-                      <Typography
-                        id="modal-modal-title"
-                        variant="h6"
-                        component="h2"
-                      >
-                        Attendance for class{" "}
-                      </Typography>
-                    </div>
-                  </div>
-                  {enrollStudents && (
-                    <div className="my-5">
-                      <AttandanceListStudent
-                        type="markAttendance"
-                        enrollStudents={enrollStudents}
-                      />
-                    </div>
-                  )}
-                  <div className="grid grid-cols-2 gap-10">
-                    <div className="col-span-1">
-                      <Button
-                        className="mt-5 w-full bg-yellow-600"
-                        variant="contained"
-                        color="error"
-                        onClick={startSession}
-                        endIcon={<RotateLeftIcon />}
-                      >
-                        End Class
-                      </Button>
-                    </div>
-                  </div>
-                </Box>
-              </Modal>
-            )}
-          </div>
+
         </div>
       )}
     </>

@@ -9,6 +9,8 @@ import AttandanceList from "@/components/user/teacher/AttandanceList";
 import { fetchEnrolledStudentsInBatch } from "@/backend/Batches/BatchesDB";
 import { fetchSessionDataForClass } from "@/backend/Session/SessionDB";
 import { fetchSessionAttendance } from "@/backend/Session/SessionDB";
+import VerifiedIcon from '@mui/icons-material/Verified';
+import CallMissedOutgoingIcon from '@mui/icons-material/CallMissedOutgoing';
 import { fetchStudentsData } from "@/backend/Students/StudentDB";
 
 const ChapterDetailHome = ({ sessionId, batchId, user }) => {
@@ -110,12 +112,12 @@ const ChapterDetailHome = ({ sessionId, batchId, user }) => {
             <div className="grid grid-cols-1 w-full mx-auto my-10 gap-10">
               <div className="col-span-1">
                 <h1 className=" my-auto text-2xl mt-3 ">
-                  <BackButton /> Class: {sessionId}
+                  <BackButton /> Details for Session{sessionId}
                 </h1>
               </div>
 
               <Divider variant="middle" />
-              <div className="col-span-1">
+              <div className="col-span-1" style={{ padding:'3%' }}>
                 {chapterDetail && (
                   <BatchHistory
                     user={user}
@@ -127,36 +129,46 @@ const ChapterDetailHome = ({ sessionId, batchId, user }) => {
                     // getRecordedVideo={getRecordedVideo}
                   />
                 )}
-              </div>
-              {user !== "student" && (
-                <div className="col-span-1 ">
-                  <div className="bg-white rounded-md p-5 ">
-                    <h1 className="py-2 border-b-2 ">Attendance</h1>
-                    <div className=" flex  justify-around mt-10">
-                      <div className="w-full px-2">
-                        <h1 className="py-2 border-b-2 ">Present Students</h1>
-                        {presentStudentsArray && (
-                          <AttandanceList
-                            presentStudentsArray={presentStudentsArray}
-                            value="Student"
-                            type="present"
-                          />
-                        )}
-                      </div>
-                      <div className="w-full px-2">
-                        <h1 className="py-2 border-b-2 ">Absent Students</h1>
-                        {absentStudents && (
-                          <AttandanceList
-                            absentStudents={absentStudents}
-                            value="Student"
-                            type="absent"
-                          />
-                        )}
+
+                <br/><br/>
+
+                {user !== "student" && (
+                  <center>
+                    <div className="col-span-1" style={{ width:'100%', textAlign:'left' }}>
+                      <div className="bg-white rounded-lg  p-5 " style={{ borderRadius:'20px' }}>
+                        <h1 className="py-2 border-b-2 " style={{ fontSize:'160%' }}>Attendance for Session{sessionId}</h1>
+                        <div className=" flex  justify-around mt-10">
+                          <div className="w-full px-2">
+                            <h1 className="py-2 border-b-2 text-lime-700 text-[120%]"><VerifiedIcon/>&nbsp;&nbsp;Present Students</h1>
+                            {presentStudentsArray && (
+                              
+                                <AttandanceList
+                                  presentStudentsArray={presentStudentsArray}
+                                  value="Student"
+                                  type="present"
+                                />
+                            
+                              
+                            )}
+                          </div>
+                          <div className="w-full px-2">
+                            <h1 className="py-2 border-b-2 text-red-400	 text-[120%]"><CallMissedOutgoingIcon/>&nbsp;&nbsp;Absent Students</h1>
+                            {absentStudents && (
+                              <AttandanceList
+                                absentStudents={absentStudents}
+                                value="Student"
+                                type="absent"
+                              />
+                            )}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              )}
+                  </center>
+                  
+                )}
+              </div>
+              
             </div>
           </div>
         </div>

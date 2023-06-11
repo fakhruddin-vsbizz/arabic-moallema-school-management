@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import { Chip } from "@mui/material";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
+import CheckCircle from '@mui/icons-material/CheckCircle';
 
 const bull = (
   <Box
@@ -56,8 +57,8 @@ const MUIMiniCard = ({
     <div className="flex-row animate-popupSlide bg-transparent ">
       
         <Card
-          sx={{ minWidth: 180, backgroundColor: 'rgb(107 114 128)', color: 'white' }}
-          className="p-4 w-full  hover:bg-lime-500 bg-gray-500  text-white transition duration-150 ease-out hover:ease-in   text-bold place-content-center text-center shadow-lg flex-row"
+          sx={{ minWidth: 180, backgroundColor: '#015e6d', color: 'white', borderRadius:'20px' }}
+          className="p-4 w-full transition duration-150 ease-out hover:ease-in text-bold place-content-center text-center shadow-lg flex-row"
         >
           <CardContent className="text-bold whitespace-normal animate-popupSlide hover:animate-popupSlide">
             <Typography className="text-md" gutterBottom>
@@ -67,7 +68,7 @@ const MUIMiniCard = ({
               <h1 className="text-xl xl:text-2xl ">{title}</h1>
             </Typography>
             <Typography sx={{ mb: 1.5 }}>{subTitle}</Typography>
-            <Typography variant="body2">{newDisc}</Typography>
+            <Typography variant="body2">{newDisc == 'Invalid Date' ? "" : newDisc}</Typography>
           </CardContent>
           {btn && user !== "student" && (
             <div className="flex-row">
@@ -76,8 +77,8 @@ const MUIMiniCard = ({
                 <Link href={link}>
                   <Button
                     size="medium"
-                    style={{ backgroundColor: 'rgb(132 204 22)', color: 'white', border: '2px solid rgb(107 114 128)'  }}
-                    className="text-center w-48 border-2 border-white bg-lime-500 text-white hover:bg-orange-500 "
+                    style={{ backgroundColor: '#fb933c', color: 'white', border: '2px solid rgb(107 114 128)', borderRadius:'20px' }}
+                    className="text-center w-48 border-2 border-white bg-lime-500 text-white"
                   >
                     {btnText}
                   </Button>
@@ -89,8 +90,8 @@ const MUIMiniCard = ({
             <div>
               <Divider variant="middle" className="my-2 bg-gray-200" />
               <CardActions className=" place-content-center">
-                <Button size="medium" className="text-center w-48 border-2">
-                  <Chip label={chipLable} style={{color: 'white'}} variant="outlined" />
+                <Button size="medium" className="text-center w-48 border-2" style={{ color:'yellowgreen' }}>
+                  <CheckCircle/>&nbsp;&nbsp;<Chip label={chipLable} style={{color: 'yellowgreen'}} variant="outlined" />
                 </Button>
               </CardActions>
             </div>

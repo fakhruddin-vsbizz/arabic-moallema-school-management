@@ -53,7 +53,7 @@ const Sidebar = (props) => {
     authCtx.logout();
     // router.replace("/");
   };
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   // var width = (window.innerWidth)
 
@@ -131,29 +131,8 @@ const Sidebar = (props) => {
         </ul>
 
         <ul className="mt-10">
-          {open && (
-            <Divider className="text-white border-white">
-              <Chip label="User" className="bg-white text-dark-purple" />
-            </Divider>
-          )}
-          <Link href="/">
-            <li
-              // key={index}
-              className={`flex  rounded-md p-2 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center gap-x-4`}
-            >
-              {/* <img src={nav_obj.img} className="w-8 border rounded-md" />  */}
-              <Tooltip title="My Profile">
-                <Avatar alt="User" src={avatar} />
-              </Tooltip>
-              <span
-                className={`${
-                  !open && "hidden"
-                } origin-left duration-200 text-base`}
-              >
-                My Profile
-              </span>
-            </li>
-          </Link>
+          
+          
           <Link href="/">
             <li
               // key={index}

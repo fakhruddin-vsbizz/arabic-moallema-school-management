@@ -15,6 +15,7 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import LastPageIcon from "@mui/icons-material/LastPage";
 import { Button, Chip, TableHead } from "@mui/material";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 // import { fetchChapters } from "@/backend/Chapters/GetChaptersDB";
 
 // commenting to resolve merge
@@ -137,37 +138,36 @@ export default function CustomPaginationActionsTable({
   //   fetchChaptersData();
   // }, []);
   return (
-    <div className="bg-white rounded-lg shadow-md">
-      <div className=" border-b-2 p-3 ">
-        <h1 className="text-2xl pt-2 "></h1>
-      </div>
+    <div className="shadow-md" style={{ backgroundColor:'#015e6d', padding:'3%', borderRadius:'20px' }}>
+      
+      <center>
       <TableContainer>
-        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <Table sx={{ width: '80%' }} aria-label="custom pagination table">
           <TableHead>
-            <TableRow className=" bg-gray-50 ">
-              <TableCell className=" font-semibold ">Date and Time</TableCell>
+            <TableRow style={{ backgroundColor:'#fb933c'}}>
+              <TableCell className=" font-semibold "><b style={{ fontSize:'120%', fontFamily:'Segoe UI' }}>Date and Time</b></TableCell>
               {user !== "student" && (
                 <TableCell className=" font-semibold ">
-                  Total Students
+                  <b style={{ fontSize:'120%', fontFamily:'Segoe UI' }}>Total Students</b>
                 </TableCell>
               )}
               <TableCell className=" font-semibold " align="center">
-                Status
+                <b style={{ fontSize:'120%', fontFamily:'Segoe UI' }}>Status</b>
               </TableCell>
 
               {type === "chapterDetail" && user !== "student" && (
                 <TableCell className=" font-semibold " align="center">
-                  Attendance
+                  <b style={{ fontSize:'120%', fontFamily:'Segoe UI' }}>Attendance</b>
                 </TableCell>
               )}
               {user === "student" && (
                 <TableCell className=" font-semibold " align="center">
-                  Recorded Video
+                  <b style={{ fontSize:'120%', fontFamily:'Segoe UI' }}>Recorded Video</b>
                 </TableCell>
               )}
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody style={{ backgroundColor:'#b9cfd5' }}>
             {(batchHistory && rowsPerPage > 0
               ? batchHistory.slice(
                   page * rowsPerPage,
@@ -175,47 +175,56 @@ export default function CustomPaginationActionsTable({
                 )
               : rows
             ).map((chapter) => (
-              <TableRow key={chapter.session_id}>
-                <TableCell component="th" scope="row">
+              <TableRow key={chapter.session_id} style={{ fontFamily:'Segoe UI' }}>
+                <TableCell component="th" scope="row" style={{ fontFamily:'Segoe UI' }}>
                   {chapter.starting_time.substring(0, 10)} ,
                   {new Date(chapter.starting_time).getHours()}:
                   {new Date(chapter.starting_time).getMinutes()}
                 </TableCell>
                 {user !== "student" && (
-                  <TableCell>
+                  <TableCell style={{ fontFamily:'Segoe UI' }}>
                     {chapter.students_present.students.length} Students
                   </TableCell>
                 )}
 
-                <TableCell style={{ width: 180 }} align="center">
+                <TableCell style={{ width: 180, fontFamily:'Segoe UI' }} align="center">
                   {chapter.chapter_completion_status === "Completed" ? (
-                    <Chip
-                      className="border-green-500  text-green-500  bg-green-100 "
-                      label="Completed"
-                      variant="outlined"
-                    />
+                    <label>
+                      <CheckCircleIcon/>
+                      &nbsp;&nbsp;&nbsp;
+                      <Chip
+                        className="border-green-500  text-green-500  bg-green-100 "
+                        label="Completed"
+                        variant="outlined"
+                      />
+                    </label>
+                    
                   ) : (
+                    <label>
+                      <CheckCircleIcon/>
+                      &nbsp;&nbsp;&nbsp;
                     <Chip
                       className="border-yellow-500  text-yellow-500  bg-yellow-100 "
                       label="Done"
                       variant="outlined"
                     />
+                    </label>
                   )}
                 </TableCell>
 
                 {type === "chapterDetail" && user !== "student" && (
-                  <TableCell align="center">
-                    <Button
+                  <TableCell align="center" style={{ fontFamily:'Segoe UI' }}>
+                    <Button variant="contained" style={{ fontFamily:'Segoe UI' }}
                       onClick={() =>
                         getAttandanceSelectedSession(chapter.session_id)
                       }
                     >
-                      See Attendance
+                      Attendance
                     </Button>
                   </TableCell>
                 )}
                 {user === "student" && (
-                  <TableCell align="center">
+                  <TableCell align="center" style={{ fontFamily:'Segoe UI' }}>
                     <Button
                       onClick={() => getRecordedVideo(chapter.session_id)}
                     >
@@ -233,8 +242,8 @@ export default function CustomPaginationActionsTable({
             )}
           </TableBody>
           <TableFooter>
-            <TableRow>
-              <TablePagination
+            <TableRow style={{ backgroundColor:'#eaebeb' }}>
+              <TablePagination 
                 rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
                 colSpan={4}
                 count={batchHistory.length}
@@ -254,6 +263,8 @@ export default function CustomPaginationActionsTable({
           </TableFooter>
         </Table>
       </TableContainer>
+      </center>
+      
     </div>
   );
 }
