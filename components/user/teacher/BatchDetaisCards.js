@@ -21,6 +21,7 @@ const ClassDetais = ({ batchName, user }) => {
   const [batchId, setBatchId] = React.useState([]);
 
   const [loading, setLoading] = React.useState(false);
+  const [nextSession, setNextSession] = React.useState("");
 
   const authCtx = React.useContext(AuthContext);
   const email = authCtx.userEmail;
@@ -50,6 +51,7 @@ const ClassDetais = ({ batchName, user }) => {
       if (batchId) {
         const data = await fetchSessionData(batchId);
         setSessionData(data);
+        setNextSession(data.length+1)
       }
     };
     fetchSession();
@@ -66,7 +68,7 @@ const ClassDetais = ({ batchName, user }) => {
               <h2 className="text-2xl lg:text-3xl text-white ">
                 {batchName} 
               </h2>
-              <h4 className="text-2xl lg:text-xl text-white " >Current Session: sessionX </h4>
+              <h4 className="text-2xl lg:text-xl text-white " >Next Session: session{nextSession} </h4>
             </div>
             secondComp=<div className="animate-popupSlide  ">
               <h2 className="text-2xl lg:text-xl text-white ">
