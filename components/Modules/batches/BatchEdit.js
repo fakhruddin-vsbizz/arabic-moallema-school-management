@@ -251,8 +251,8 @@ const BatchEdit = ({ actionBtn, link, setOpen }) => {
                     </label>
                     <input
                       type="time"
-                      min="07:00"
-                      max="20:00"
+                      // min="07:00"
+                      // max="20:00"
                       name="time"
                       id="time"
                       ref={timeRef}
