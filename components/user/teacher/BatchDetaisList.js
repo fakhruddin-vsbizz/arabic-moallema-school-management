@@ -273,8 +273,11 @@ const ClassDetais = ({ batchName, user }) => {
                 <hr></hr>
                 <br/>
 
-                <div><label>You can edit the class meet link below:</label><br/><br/>
-                  <label className="text-md mr-10">
+                <div>
+                   <label>Join the class meet link by clicking on the button provided below:</label><br/><br/>
+                  {user !== "student" ? (
+                    <label className="text-md mr-10">
+                    <label>You can edit the class meet link below:</label><br/><br/>
                   <input
                     type="text"
                     className=" m-4 rounded-lg w-96"
@@ -290,6 +293,7 @@ const ClassDetais = ({ batchName, user }) => {
                     Edit Link
                   </Button>
                   </label>
+                  )  : (null) }
                   {isDisabled ? (
                         <Link
                         href={detail[0].g_meet}
